@@ -1,0 +1,7 @@
+name: 522groupenv.yaml
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pandas
+prefix: C:\Users\upwaz\miniforge3\envs\522groupenv.yaml
