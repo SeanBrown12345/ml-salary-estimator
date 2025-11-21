@@ -10,4 +10,5 @@ dependencies:
   - conda-lock
   - matplotlib
   - altair
+  - vegafusion
 prefix: /home/tiantong/miniforge3/envs/522groupenv.yaml

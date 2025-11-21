@@ -13,10 +13,10 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: bf1909e1ecc87d6d89b21ac252d4a0228de80459cb8da6f0c0b38b5e4e27a443
-    osx-arm64: e55e3b13d007cc58456380845081abb30c86cdeb677d3094e7b46bdba86f0f2d
-    osx-64: 17a91298690e9b98091c8125b12b36f263aea4d1badc259a299c9de6a7b79989
-    win-64: b9d96dd967acf222b01bcffc5c262c9f226c7787f0ee6620b508aa123ff3514c
+    linux-64: de273d9088565d88226d87fcfc5ddb203b45b9742b1300a23f4f2cd528fc8a9b
+    osx-arm64: 7c5ad5e50504b6d4feb95ce57034b6c5b2f9db12afa0a804f879a9b5684504c1
+    osx-64: 3935dd64ca8bb18653b18d13891407baef146b1c2b0bcaa0f4a51df0f6f0e205
+    win-64: 1cc0e5529736136d889b08fac5813ec1c055aee41c89ce2ec5faba580006ee9e
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -507,6 +507,65 @@ package:
   hash:
     md5: 5dc3781bbc4ddce0bf250a04c1a192c2
     sha256: 38c5e43d991b0c43713fa2ceba3063afa4ccad2dd4c8eb720143de54d461a338
+  category: main
+  optional: false
+- name: arro3-core
+  version: 0.6.5
+  manager: conda
+  platform: linux-64
+  dependencies:
+    __glibc: '>=2.17,<3.0.a0'
+    libgcc: '>=14'
+    python: '>=3.12,<3.13.0a0'
+    python_abi: 3.12.*
+  url: https://conda.anaconda.org/conda-forge/linux-64/arro3-core-0.6.5-py312h0ccc70a_0.conda
+  hash:
+    md5: 97602d0fbbf5e091fc3de9a3c28e1026
+    sha256: 51f2aa526093ea04d4c7508e1c3db5e1cf0297c44f015608ea6fd6a2637176e7
+  category: main
+  optional: false
+- name: arro3-core
+  version: 0.6.5
+  manager: conda
+  platform: osx-64
+  dependencies:
+    __osx: '>=10.13'
+    python: '>=3.12,<3.13.0a0'
+    python_abi: 3.12.*
+  url: https://conda.anaconda.org/conda-forge/osx-64/arro3-core-0.6.5-py312h1f62012_0.conda
+  hash:
+    md5: dad9cc6fe8df9e661588bac71b14d6d7
+    sha256: d0464f05f6c8efc0338329cfac682a759b4af6b7bc065efa3fb02bc5e30854cc
+  category: main
+  optional: false
+- name: arro3-core
+  version: 0.6.5
+  manager: conda
+  platform: osx-arm64
+  dependencies:
+    __osx: '>=11.0'
+    python: '>=3.12,<3.13.0a0'
+    python_abi: 3.12.*
+  url: https://conda.anaconda.org/conda-forge/osx-arm64/arro3-core-0.6.5-py312h7a0e18e_0.conda
+  hash:
+    md5: 719ce74965f11d5ee398c9e47e01bfa4
+    sha256: 942e4828e4392d210c4f0f3db11a0ed160081059938e3301cb0233ecea490eac
+  category: main
+  optional: false
+- name: arro3-core
+  version: 0.6.5
+  manager: conda
+  platform: win-64
+  dependencies:
+    python: '>=3.12,<3.13.0a0'
+    python_abi: 3.12.*
+    ucrt: '>=10.0.20348.0'
+    vc: '>=14.3,<15'
+    vc14_runtime: '>=14.44.35208'
+  url: https://conda.anaconda.org/conda-forge/win-64/arro3-core-0.6.5-py312hb0142fd_0.conda
+  hash:
+    md5: 5f5ab24c90c4c4c62526fab0d285b495
+    sha256: d1559e5d1101fbeda80ee6ffe4b4ed6585b8413d67cadd84130adb7a1e4ea9e4
   category: main
   optional: false
 - name: arrow
@@ -13928,6 +13987,77 @@ package:
   hash:
     md5: 58f67b437acbf2764317ba273d731f1d
     sha256: f3790c88fbbdc55874f41de81a4237b1b91eab75e05d0e58661518ff04d2a8a1
+  category: main
+  optional: false
+- name: vegafusion
+  version: 2.0.3
+  manager: conda
+  platform: linux-64
+  dependencies:
+    __glibc: '>=2.17,<3.0.a0'
+    arro3-core: '>=0.4.2'
+    libgcc: '>=14'
+    narwhals: '>=1.42'
+    packaging: ''
+    python: '>=3.12,<3.13.0a0'
+    python_abi: 3.12.*
+  url: https://conda.anaconda.org/conda-forge/linux-64/vegafusion-2.0.3-py312hd3d3aba_0.conda
+  hash:
+    md5: 23ab939157e91314849e93ce0f53aa4c
+    sha256: 238767300533bc7558aada35092980839dca3d169ca151421bebe61fb1559265
+  category: main
+  optional: false
+- name: vegafusion
+  version: 2.0.2
+  manager: conda
+  platform: osx-64
+  dependencies:
+    __osx: '>=10.13'
+    arro3-core: '>=0.4.2'
+    narwhals: '>=1.13.5'
+    packaging: ''
+    python: '>=3.12,<3.13.0a0'
+    python_abi: 3.12.*
+  url: https://conda.anaconda.org/conda-forge/osx-64/vegafusion-2.0.2-py312h33f09d2_0.conda
+  hash:
+    md5: d60d520436c2ab5e4fef8eb4fa8ba2f2
+    sha256: fd757e71721756b415b23d47fe794b48d48755e11c59814d97099d3d5fbd8c64
+  category: main
+  optional: false
+- name: vegafusion
+  version: 2.0.2
+  manager: conda
+  platform: osx-arm64
+  dependencies:
+    __osx: '>=11.0'
+    arro3-core: '>=0.4.2'
+    narwhals: '>=1.13.5'
+    packaging: ''
+    python: '>=3.12,<3.13.0a0'
+    python_abi: 3.12.*
+  url: https://conda.anaconda.org/conda-forge/osx-arm64/vegafusion-2.0.2-py312h846eeb7_1.conda
+  hash:
+    md5: 7d8c2815729ca651387583d393df491c
+    sha256: 540d9aa5ba7e36e36b02fd592ca327e4c6486f251c784aff00ed11f3b99771d7
+  category: main
+  optional: false
+- name: vegafusion
+  version: 2.0.3
+  manager: conda
+  platform: win-64
+  dependencies:
+    arro3-core: '>=0.4.2'
+    narwhals: '>=1.13.5'
+    packaging: ''
+    python: '>=3.12,<3.13.0a0'
+    python_abi: 3.12.*
+    ucrt: '>=10.0.20348.0'
+    vc: '>=14.3,<15'
+    vc14_runtime: '>=14.44.35208'
+  url: https://conda.anaconda.org/conda-forge/win-64/vegafusion-2.0.3-py312hf664a67_0.conda
+  hash:
+    md5: 21ed349a06bc7bf9d1dce2cf3b3062c2
+    sha256: 3656c59fc878ec3019d8c1fbdaa7a92278958b7bffd726ecfdece8ff975784c2
   category: main
   optional: false
 - name: virtualenv
