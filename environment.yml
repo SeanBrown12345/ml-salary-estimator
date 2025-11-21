@@ -1,14 +1,17 @@
 name: 522groupenv.yaml
 channels:
   - conda-forge
+  - defaults
 dependencies:
-  - python=3.12
   - pandas
-  - jupyter
-  - ucimlrepo
+  - python=3.12
   - scikit-learn
-  - conda-lock
+  - ucimlrepo
+  - jupyter
   - matplotlib
   - altair
   - vegafusion
-prefix: /home/tiantong/miniforge3/envs/522groupenv.yaml
+  - vl-convert-python[version='>=1.8.0']
+  - pyarrow
+  - conda-lock
+prefix: C:\Users\27790\miniforge3\envs\522groupenv.yaml
