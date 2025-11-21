@@ -8,4 +8,6 @@ dependencies:
   - ucimlrepo
   - scikit-learn
   - conda-lock
+  - matplotlib
+  - altair
 prefix: /home/tiantong/miniforge3/envs/522groupenv.yaml
