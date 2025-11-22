@@ -1,5 +1,3 @@
-# 522GroupProject
-
 # Predicting Income Levels Using the Adult Census Dataset
 
 ## Contributors
@@ -7,6 +5,8 @@
 - Tiantong Yin
 - Yanxin Liang
 - Siting Wang
+
+Report URL: https://seanbrown12345.github.io/ml-salary-estimator/
 
 
 ## About
