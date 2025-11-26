@@ -1,0 +1,9 @@
+services:
+  522group-env:
+    image: ytin98/522group
+    ports: 
+      - "8888:8888"
+    volumes:
+      - .:/home/jovyan/522group
+    stdin_open: true
+    tty: true
