@@ -35,11 +35,11 @@ The target variable is **income**, categorized as `<=50K` or `>50K`.
 
 Follow the steps below to reproduce the analysis.
 
-###Setup
+### Setup
 
 1. Make sure Docker Desktop is running, then clone this repo.
 
-###Usage
+### Usage
 
 2. Navigate to the root of this project, then run this command:
 ```bash
