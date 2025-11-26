@@ -35,26 +35,29 @@ The target variable is **income**, categorized as `<=50K` or `>50K`.
 
 Follow the steps below to reproduce the analysis.
 
-### 1. Create the Conda environment
+### 1. Make sure Docker Desktop is running, then clone this repo.
+
+### 2. Navigate to the root of this project, then run this command:
 ```bash
-conda env create --file environment.yml
+docker compose up
 ```
 
-### 2. Activate the Conda environment
+### 3. Activate the Conda environment
 ```bash
 conda activate 522groupenv.yaml
 ```
 
-### 3. Launch Jupyter Lab
-```bash
-jupyter lab .
-```
+### 4. In the terminal, look for the URL that looks something like `http://127.0.0.1:8888/lab?token=` , copy and paste that URL into your browser.
 
-### 4. Exit the environment
-```bash
-conda deactivate
-```
 
+
+### 5. In the jupyter lab session that just launched, open `src/income_level_predictor_report.ipynb`. In the top menu under "Kernel", click "Restart Kernel and Run All Cells..."
+
+
+### Clean up
+
+1. Go back to the terminal where docker compose is running,  then
+type `Cntrl` + `C` in the terminal where you launched the container, and then type `docker compose rm` to remove the stopped container.
 
 ## Dependencies
 
