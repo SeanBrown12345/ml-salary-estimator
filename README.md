@@ -78,7 +78,19 @@ These dependencies will be installed automatically when running:
 ```bash
 conda env create --file environment.yml
 ```
+## Adding Dependencies
 
+1. In a new branch, add the dependency to the environment.yml file.
+
+2. Run the command `conda-lock -k explicit --file environment.yml` --update to update the `conda-lock.yml` file.
+
+3. Re-build the Docker image.
+
+4. Push the changes to github, the Docker image will be updated automatically. This image will be tagged with the SHA for the commit which changed the file.
+
+5. Update `docker.compose.yml` on your branch to use the newly created container image.
+
+6. Create a PR to merge your branch with main.
 
 ## License
 
