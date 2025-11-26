@@ -35,26 +35,29 @@ The target variable is **income**, categorized as `<=50K` or `>50K`.
 
 Follow the steps below to reproduce the analysis.
 
-### 1. Create the Conda environment
+### Setup
+
+1. Make sure Docker Desktop is running, then clone this repo.
+
+### Usage
+
+2. Navigate to the root of this project, then run this command:
 ```bash
-conda env create --file environment.yml
+docker compose up
 ```
 
-### 2. Activate the Conda environment
-```bash
-conda activate 522groupenv.yaml
-```
 
-### 3. Launch Jupyter Lab
-```bash
-jupyter lab .
-```
+3. In the terminal, look for the URL that looks something like `http://127.0.0.1:8888/lab?token=` , copy and paste that URL into your browser.
 
-### 4. Exit the environment
-```bash
-conda deactivate
-```
 
+
+4. In the jupyter lab session that just launched, open `src/income_level_predictor_report.ipynb`. In the top menu under "Kernel", click "Restart Kernel and Run All Cells..."
+
+
+### Clean up
+
+1. Go back to the terminal where docker compose is running,  then
+type `Cntrl` + `C` in the terminal where you launched the container, and then type `docker compose rm` to remove the stopped container.
 
 ## Dependencies
 
@@ -75,7 +78,19 @@ These dependencies will be installed automatically when running:
 ```bash
 conda env create --file environment.yml
 ```
+## Adding Dependencies
 
+1. In a new branch, add the dependency to the environment.yml file.
+
+2. Run the command `conda-lock -k explicit --file environment.yml` --update to update the `conda-lock.yml` file.
+
+3. Re-build the Docker image.
+
+4. Push the changes to github, the Docker image will be updated automatically. This image will be tagged with the SHA for the commit which changed the file.
+
+5. Update `docker.compose.yml` on your branch to use the newly created container image.
+
+6. Create a PR to merge your branch with main.
 
 ## License
 
