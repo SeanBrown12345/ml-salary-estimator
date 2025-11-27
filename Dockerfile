@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/minimal-notebook
+FROM quay.io/jupyter/minimal-notebook:2025-11-24
 
 COPY conda-lock.yml /tmp/conda-lock.yml
 RUN mamba install --quiet --file /tmp/conda-lock.yml \
