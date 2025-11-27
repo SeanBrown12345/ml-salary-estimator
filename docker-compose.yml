@@ -1,9 +1,13 @@
 services:
-  522group-env:
-    image: ytin98/522group
-    ports: 
+  # run jupyter notebook inside jupyter 
+  jupyter-notebook:
+    image:  ytin98/522group:latest
+    ports:
       - "8888:8888"
     volumes:
       - .:/home/jovyan/522group
-    stdin_open: true
-    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+    platform: linux/amd64
