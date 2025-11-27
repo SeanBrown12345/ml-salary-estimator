@@ -1,7 +1,6 @@
 name: 522groupenv.yaml
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - pandas
   - python=3.12
@@ -14,4 +13,7 @@ dependencies:
   - vl-convert-python[version='>=1.8.0']
   - pyarrow
   - conda-lock
-prefix: C:\Users\27790\miniforge3\envs\522groupenv.yaml
+  - pandera
+  - deepchecks
+  - pointblank
+prefix: C:\Users\upwaz\miniforge3\envs\522groupenv.yaml
