@@ -3,7 +3,7 @@ channels:
   - conda-forge
 dependencies:
   - numpy=1.26.4
-  - pandas
+  - pandas=2.3.3
   - python=3.12
   - scikit-learn
   - ucimlrepo
