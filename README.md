@@ -43,7 +43,7 @@ Follow the steps below to reproduce the analysis.
 
 2. Navigate to the root of this project, then run this command:
 ```bash
-docker compose up
+docker compose up --pull always
 ```
 
 
