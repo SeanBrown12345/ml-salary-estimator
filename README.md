@@ -82,7 +82,7 @@ conda env create --file environment.yml
 
 1. In a new branch, add the dependency to the environment.yml file.
 
-2. Run the command `conda-lock -k explicit --file environment.yml` --update to update the `conda-lock.yml` file.
+2. Run the command `conda-lock --file environment.yml` --update to update the `conda-lock.yml` file.
 
 3. Re-build the Docker image.
 
