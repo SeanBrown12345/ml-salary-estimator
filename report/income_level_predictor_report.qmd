@@ -1,0 +1,92 @@
+---
+title: "Predicting Income Levels Using the Adult Census Dataset"
+author: "Sean Brown & Tiantong Yin & Yanxin Liang & Siting Wang"
+format: 
+  html:
+    toc: true
+    toc-depth: 2
+  pdf:
+    toc: true
+    toc-depth: 2
+editor: source
+execute:
+  echo: false
+bibliography: references.bib
+---
+
+
+# Summary
+In this project, we examine whether demographic and employment-related factors can be used to predict if an individual’s annual income exceeds $50K, using the Adult Census Income dataset. After cleaning the data and preparing the features, we compared several classification models, including logistic regression, SVM, and random forest. Logistic regression provided the strongest baseline performance, and after further tuning, the final model reached an accuracy of 0.80 and a weighted F1 score of 0.83 on the test set. While the model performs well on the majority class, it continues to face challenges in identifying higher-income individuals due to class imbalance. Overall, our findings suggest that income prediction is feasible, though additional techniques—such as resampling or more advanced models—may help improve performance on the minority class.
+
+# Introduction
+
+Income inequality has reached a record high in Canada within the recent years [@statcan]. Increase in Canada's wealth gap has been shown to perpetuate poverty cycles, affect economic mobility, and limit socioeconomic opportunities [@income_mobility]. Understanding the individual factors associated with income level could help governments and policy makers better address these issues. 
+
+In this project, we seek to build a machine learning model capable of accurately predicting whether an individual’s income exceeds 50,000. To do such classification, our model will consider factors such as age, education level, occupation, marital status, and gender just to name a few. We believe an income classification model to be valuable because of its ability to identify broad patterns, and highlight features that contribute most to high income status. These insights could also shed light on structural inequalities, economic trends, and educational impacts. Although a human could perform this task reasonably accurately, a machine learning model enables scalability, and limits the biases present in human decision making. Therefore, our goal is to build a model that uses relevant features to predict income status, and evaluate how it performs on such tasks.
+
+# Methods
+## Data
+The data set used in this project is the Adult census income dataset. It was originally extracted from the 1994 U.S. Census database by Barry Becker.  In 1996, the dataset was donated to the UCI Machine Learning Repository with the collaboration of Ronny Kohavi [@becker_adult], the dataset can be found here: https://archive.ics.uci.edu/dataset/2/adult. The dataset contains 48,842 rows and 14 columns. We split the data into a 40% training set and a 60% test set. Each row in the data set represents an individual’s personal and demographic information, including the income class label (whether their annual income exceeded $50K or not) and attributes such as age, education level, occupation, and hours per week.
+
+To examine whether each predictor may help discriminate between the two income groups (<=50K vs. >50K), we first explored the numeric and categorical features separately.
+
+### Summary of the Training Data
+
+By checking the summary table below, we observe that there are several missing values in features such as workclass, occupation, and native-country. These missing values will be handled during data preprocessing using an appropriate imputation strategy.
+
+Additionally, the target variable income contains inconsistencies in spelling (e.g., '<50K' vs. '<50K.'), so we cleaned these values to ensure a consistent label representation.
+
+
+### Numeric Features
+
+According to the summary table, the numeric features vary widely in both range and scale. For example, hours-per-week ranges from 1 to 99, whereas capital-gain ranges from 0 to 99,999. This large difference in magnitude makes it necessary to apply a StandardScaler to normalize the features so that models relying on distance can compare them fairly.
+
+Additionally, some variables such as capital-gain and capital-loss are extremely skewed, with most values concentrated near zero. We are going to the compare the distribution of the numeric features differ between the two target classes income <=50K and >50K.
+
+### Insights for Histogram of Numeric Features:
+
+- Age: The two income groups differ clearly in their age distributions. Individuals earning >50K tend to be older, most commonly between ages 40 and 55, while the <=50K group is more spread out and skewed younger. This suggests that higher income may be linked to greater work experience.
+  
+- Education-num: Individuals earning >50K generally have higher education levels, indicating that formal education is an important factor associated with income.
+
+- Capital-gain: The distribution is strongly right-skewed, with most values at zero for both groups. Non-zero values appear more often in the >50K group, and there is an extreme outlier near 100,000.
+
+- Capital-loss: The pattern is similar to capital-gain, with almost all values at zero and slightly more non-zero observations in the >50K group.
+
+- Hours-per-week: Individuals earning >50K tend to work longer hours, showing a clear shift toward extended working time.
+
+In the Spearman Correlation Bubble Chart for numeric features, we can see that none of the numeric variables are strongly correlated with each other. The highest correlation is between education level and hours per week, at approximately 0.14, which is still very weak. Therefore, multicollinearity is not a concern for these features.
+
+### Categorical Features
+For categorical features, we produced normalized stacked bar charts to visualize how proportions of each income group differ across categories.
+
+This interactive chart shows the distribution of income levels across different categorical features. By selecting a feature from the radio buttons, the chart displays the proportion of individuals earning <=50K and >50K within each category of that feature. This can be used to compare how income outcomes vary across target groups.
+
+For example, when selecting workclass, we can see that individuals in “Self-emp-inc” have a noticeably higher proportion of >50K earners compared with categories like “Private” or “Without-pay.” This helps identify which categories are more associated with higher or lower income.
+
+### Insights for Histogram of Categorical Features
+
+- Workclass: Some categories like Self-emp-inc and Federal-gov show a noticeably larger share of individuals earning >50K. In contrast, groups like Private and Never-worked are totally composed of <=50K earners.
+
+- Education: Higher degrees (e.g., Masters, Doctorate) are strongly associated with higher income, with a much greater proportion of >50K individuals. Meanwhile, categories such as HS-grad and Some-college are still dominated by the <=50K group.
+
+- Other categorical features: Variables including marital-status, occupation, and relationship also show clear differences in the distribution of income levels across categories. This uneven spread suggests that many of these categorical predictors carry useful information for distinguishing between the two income groups.
+
+
+## Analysis
+To build a classification model, all columns in the dataset were used except final weight (irrelevant data), education-num (redundant information with the education column), and race (for ethical considerations). All columns are imputed and then transformed according to their data types. We compare the performance of SVM RBF, logistic regression, and random forest, using their default parameters. We then select the top performing model for hyperparameter and decision threshold tuning with cross validation. We evaluate the models using F1 score due to the class imbalance.
+
+
+# Results & Discussion
+The initial experiment revealed that the logistic regression model has the highest base F1 score of ~0.674. After tuning the hyperparameter C and the decision threshold, we evaluated our final model on the test set. Our model achieved a final accuracy of 0.80 and a weighted average F1 score of 0.83.
+
+Regarding our class specific results, we can see our models perform well on the majority class (income <= 50K), with a precision and recall of 0.94 and 0.81 respectively. On the minority class (income > 50K), our model has a recall of 0.74, meaning it catches 74% of the minority class. We only have a 0.42 precision on the minority class, which implies that there are many false positives. In conclusion, our model is tuned to be sensitive to catch many cases where one’s income is above 50K, but also creates many false alarms.
+
+# Future Works
+
+To improve the model, we propose some solutions to be done in further works. First, our decision threshold is tuned to maximize F1 score. Instead of this, we could select a threshold manually, depending on if we want to focus more on recall or precision. Instead of using class_weight=’balanced’ to give the minority class a heavier weight, another common and often better approach is to oversample the minority class, creating synthetic data until the classes are balanced. Finally, with the suboptimal results of both the recall and precision of the minority class, we suspect our models are not complex enough to accurately model the data. Other models such as XGBoost or neural networks could be tested to see if there is an improvement.
+
+# References
+
+
+
