@@ -20,13 +20,13 @@ In this project, we examine whether demographic and employment-related factors c
 
 # Introduction
 
-Income inequality has reached a record high in Canada within the recent years (Statistics Canada, 2025). Increase in Canada's wealth gap has been shown to perpetuate poverty cycles, affect economic mobility, and limit socioeconomic opportunities (Connoly and Haeck, 2024). Understanding the individual factors associated with income level could help governments and policy makers better address these issues. 
+Income inequality has reached a record high in Canada within the recent years [@statcan]. Increase in Canada's wealth gap has been shown to perpetuate poverty cycles, affect economic mobility, and limit socioeconomic opportunities [@income_mobility]. Understanding the individual factors associated with income level could help governments and policy makers better address these issues. 
 
 In this project, we seek to build a machine learning model capable of accurately predicting whether an individual’s income exceeds 50,000. To do such classification, our model will consider factors such as age, education level, occupation, marital status, and gender just to name a few. We believe an income classification model to be valuable because of its ability to identify broad patterns, and highlight features that contribute most to high income status. These insights could also shed light on structural inequalities, economic trends, and educational impacts. Although a human could perform this task reasonably accurately, a machine learning model enables scalability, and limits the biases present in human decision making. Therefore, our goal is to build a model that uses relevant features to predict income status, and evaluate how it performs on such tasks.
 
 # Methods
 ## Data
-The data set used in this project is the Adult census income dataset. It was originally extracted from the 1994 U.S. Census database by Barry Becker.  In 1996, the dataset was donated to the UCI Machine Learning Repository with the collaboration of Ronny Kohavi (Becker and Kohavi 1996), the dataset can be found here: https://archive.ics.uci.edu/dataset/2/adult. The dataset contains 48,842 rows and 14 columns. We split the data into a 40% training set and a 60% test set. Each row in the data set represents an individual’s personal and demographic information, including the income class label (whether their annual income exceeded $50K or not) and attributes such as age, education level, occupation, and hours per week.
+The data set used in this project is the Adult census income dataset. It was originally extracted from the 1994 U.S. Census database by Barry Becker.  In 1996, the dataset was donated to the UCI Machine Learning Repository with the collaboration of Ronny Kohavi [@becker_adult], the dataset can be found here: https://archive.ics.uci.edu/dataset/2/adult. The dataset contains 48,842 rows and 14 columns. We split the data into a 40% training set and a 60% test set. Each row in the data set represents an individual’s personal and demographic information, including the income class label (whether their annual income exceeded $50K or not) and attributes such as age, education level, occupation, and hours per week.
 
 To examine whether each predictor may help discriminate between the two income groups (<=50K vs. >50K), we first explored the numeric and categorical features separately.
 
@@ -38,7 +38,6 @@ Additionally, the target variable income contains inconsistencies in spelling (e
 
 
 ### Numeric Features
-
 
 According to the summary table, the numeric features vary widely in both range and scale. For example, hours-per-week ranges from 1 to 99, whereas capital-gain ranges from 0 to 99,999. This large difference in magnitude makes it necessary to apply a StandardScaler to normalize the features so that models relying on distance can compare them fairly.
 
@@ -55,7 +54,6 @@ Additionally, some variables such as capital-gain and capital-loss are extremely
 - Capital-loss: The pattern is similar to capital-gain, with almost all values at zero and slightly more non-zero observations in the >50K group.
 
 - Hours-per-week: Individuals earning >50K tend to work longer hours, showing a clear shift toward extended working time.
-
 
 In the Spearman Correlation Bubble Chart for numeric features, we can see that none of the numeric variables are strongly correlated with each other. The highest correlation is between education level and hours per week, at approximately 0.14, which is still very weak. Therefore, multicollinearity is not a concern for these features.
 
