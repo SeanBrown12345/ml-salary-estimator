@@ -5,14 +5,14 @@ dependencies:
   - numpy=1.26.4
   - pandas=2.3.3
   - python=3.12
-  - scikit-learn
-  - ucimlrepo
-  - jupyter
-  - matplotlib
-  - altair
-  - vegafusion
-  - vl-convert-python[version='>=1.8.0']
-  - pyarrow
-  - conda-lock
-  - pointblank
+  - scikit-learn=1.7.2
+  - ucimlrepo=0.0.7
+  - jupyter=1.1.1
+  - matplotlib=3.10.8
+  - altair=6.0.0
+  - vegafusion=1.6.9
+  - vl-convert-python=1.8.0
+  - pyarrow=22.0.0
+  - conda-lock=3.0.4
+  - pointblank=0.16.0
 prefix: C:\Users\upwaz\miniforge3\envs\522groupenv.yaml
