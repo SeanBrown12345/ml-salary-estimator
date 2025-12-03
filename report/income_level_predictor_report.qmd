@@ -87,12 +87,6 @@ Regarding our class specific results, we can see our models perform well on the 
 To improve the model, we propose some solutions to be done in further works. First, our decision threshold is tuned to maximize F1 score. Instead of this, we could select a threshold manually, depending on if we want to focus more on recall or precision. Instead of using class_weight=’balanced’ to give the minority class a heavier weight, another common and often better approach is to oversample the minority class, creating synthetic data until the classes are balanced. Finally, with the suboptimal results of both the recall and precision of the minority class, we suspect our models are not complex enough to accurately model the data. Other models such as XGBoost or neural networks could be tested to see if there is an improvement.
 
 # References
-Becker, B., & Kohavi, R. (1996). Adult [Data set]. UCI Machine Learning Repository. https://doi.org/10.24432/C5XW20
 
-Statistics Canada. (2025, October 9). Distributions of household economic accounts for income, consumption, saving and wealth of Canadian households, second quarter 2025. https://www150.statcan.gc.ca/n1/daily-quotidien/251009/dq251009a-eng.html
-
-VanderPlas, J., Granger, B., Heer, J., Moritz, D., Wongsuphasawat, K., Satyanarayan, A., … Sievert, S. (2018). Altair: Interactive statistical visualizations for Python. Journal of Open Source Software, 3(32), 1057. https://doi.org/10.21105/joss.01057
-
-Connolly, M., & Haeck, C. (2024). Intergenerational income mobility trends in Canada. Canadian Journal of Economics / Revue canadienne d'économique, 57(1), 5–26. https://doi.org/10.1111/caje.12699
 
 
