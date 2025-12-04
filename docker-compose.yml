@@ -5,7 +5,7 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - .:/home/jovyan/522group
+      - .:/home/jovyan/
     deploy:
       resources:
         limits:
