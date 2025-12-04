@@ -41,7 +41,7 @@ Follow the steps below to reproduce the analysis.
 
 ### Usage
 
-2. Navigate to the root of this project, then run this command:
+2. Navigate to the root of this project, make sure there isn't another process occupying port 8888, then run this command:
 ```bash
 docker compose up --pull always
 ```
