@@ -14,9 +14,22 @@ execute:
 bibliography: references.bib
 ---
 
+```{python}
+import pandas as pd
+from IPython.display import Markdown, display
+```
+
+```{python}
+baseline_comparison = pd.read_csv("../results/tables/baseline_comparison.csv").round(2)
+classification_report = pd.read_csv("../results/tables/classification_report.csv").round(2)
+tuning_results = pd.read_csv("../results/tables/tuning_results.csv").round(2)
+
+```
+
 
 # Summary
-In this project, we examine whether demographic and employment-related factors can be used to predict if an individual’s annual income exceeds $50K, using the Adult Census Income dataset. After cleaning the data and preparing the features, we compared several classification models, including logistic regression, SVM, and random forest. Logistic regression provided the strongest baseline performance, and after further tuning, the final model reached an accuracy of 0.80 and a weighted F1 score of 0.83 on the test set. While the model performs well on the majority class, it continues to face challenges in identifying higher-income individuals due to class imbalance. Overall, our findings suggest that income prediction is feasible, though additional techniques—such as resampling or more advanced models—may help improve performance on the minority class.
+In this project, we examine whether demographic and employment-related factors can be used to predict if an individual’s annual income exceeds $50K, using the Adult Census Income dataset. After cleaning the data and preparing the features, we compared several classification models, including logistic regression, SVM, and random forest. Logistic regression provided the strongest baseline performance, and after further tuning, the final model reached an accuracy of `{python} classification_report.iloc[2, 1]` and a weighted average F1 score of  `{python} classification_report.iloc[4, 3]` on the test set. While the model performs well on the majority class, it continues to face challenges in identifying higher-income individuals due to class imbalance. Overall, our findings suggest that income prediction is feasible, though additional techniques—such as resampling or more advanced models—may help improve performance on the minority class.
+
 
 # Introduction
 
@@ -77,10 +90,14 @@ For example, when selecting workclass, we can see that individuals in “Self-em
 To build a classification model, all columns in the dataset were used except final weight (irrelevant data), education-num (redundant information with the education column), and race (for ethical considerations). All columns are imputed and then transformed according to their data types. We compare the performance of SVM RBF, logistic regression, and random forest, using their default parameters. We then select the top performing model for hyperparameter and decision threshold tuning with cross validation. We evaluate the models using F1 score due to the class imbalance.
 
 
-# Results & Discussion
-The initial experiment revealed that the logistic regression model has the highest base F1 score of ~0.674. After tuning the hyperparameter C and the decision threshold, we evaluated our final model on the test set. Our model achieved a final accuracy of 0.80 and a weighted average F1 score of 0.83.
+![Confusion matrix of model performance on test data.](../results/figures/confusion_matrix.png){#fig-conf-mat width=100%}
 
-Regarding our class specific results, we can see our models perform well on the majority class (income <= 50K), with a precision and recall of 0.94 and 0.81 respectively. On the minority class (income > 50K), our model has a recall of 0.74, meaning it catches 74% of the minority class. We only have a 0.42 precision on the minority class, which implies that there are many false positives. In conclusion, our model is tuned to be sensitive to catch many cases where one’s income is above 50K, but also creates many false alarms.
+![Precision Recall Curve](../results/figures/precision_recall_curve.png){#fig-pre width=100%}
+
+# Results & Discussion
+The initial experiment revealed that the logistic regression model has the highest base F1 score of `{python} baseline_comparison.iloc[1, 1]`. After tuning the hyperparameter C and the decision threshold, we evaluated our final model on the test set. Our model achieved a final accuracy of `{python} classification_report.iloc[2, 1]` and a weighted average F1 score of  `{python} classification_report.iloc[4, 3]`.
+
+As seen in @fig-pre, models perform well on the majority class (income <= 50K), with a precision and recall of `{python} classification_report.iloc[0, 1]` and `{python} classification_report.iloc[0, 2]` respectively. On the minority class (income > 50K), our model has a recall of `{python} classification_report.iloc[1, 2]`, meaning it catches 74% of the minority class. We only have a `{python} classification_report.iloc[1, 1]` precision on the minority class, which implies that there are many false positives. In conclusion, our model is tuned to be sensitive to catch many cases where one’s income is above 50K, but also creates many false alarms.
 
 # Future Works
 
