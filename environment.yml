@@ -1,6 +1,7 @@
 name: 522groupenv.yaml
 channels:
   - conda-forge
+  - defaults
 dependencies:
   - numpy=1.26.4
   - pandas=2.3.3
