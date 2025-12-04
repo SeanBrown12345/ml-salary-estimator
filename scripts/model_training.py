@@ -21,6 +21,10 @@ import matplotlib.pyplot as plt
 def main(train, test, output_path):
     if not os.path.exists(output_path):
         os.makedirs(output_path)
+    if not os.path.exists(os.path.join(output_path, 'tables')):
+        os.makedirs(os.path.join(output_path, 'tables'))
+    if not os.path.exists(os.path.join(output_path, 'figures')):
+        os.makedirs(os.path.join(output_path, 'figures'))
 
     try:
         train_df = pd.read_csv(train)
@@ -36,11 +40,11 @@ def main(train, test, output_path):
     X_test = test_df.drop(columns="income")
     y_test = test_df["income"]
 
-    numeric_features = ['age', 'capital-gain', 'capital-loss', 'hours-per-week']
-    categorical_features = ['workclass', 'marital-status', 'occupation', 'relationship', 'native-country']
+    numeric_features = ['age', 'capital_gain', 'capital_loss', 'hours_per_week']
+    categorical_features = ['workclass', 'marital_status', 'occupation', 'relationship', 'native_country']
     ordinal_features = ['education']
     binary_features = ['sex']
-    drop_features = ['fnlwgt', 'education-num', 'race']
+    drop_features = ['fnlwgt', 'education_num', 'race']
     order = ['Preschool', '1st-4th', '5th-6th', '7th-8th', '9th', '10th', 
              '11th', '12th', "HS-grad", "Prof-school", "Assoc-voc", "Assoc-acdm", 
              "Some-college", "Bachelors", 'Masters', 'Doctorate']
@@ -97,7 +101,7 @@ def main(train, test, output_path):
     cv_results['RandomForest'] = cross_val_score(rf_pipe, X_train, y_train, cv=5, scoring=f1_scorer).mean()
 
     results_df = pd.DataFrame(list(cv_results.items()), columns=['Model', 'Mean f1 score'])
-    results_df.to_csv(os.path.join(output_path, 'baseline_comparison.csv'), index=False)
+    results_df.to_csv(os.path.join(output_path, 'tables/baseline_comparison.csv'), index=False)
     
     print('Starting hyperparameter tuning')
     # C tuning for best performing model (logistic regression)
@@ -132,7 +136,7 @@ def main(train, test, output_path):
     tuning_df = pd.DataFrame([random_search.best_params_])
     tuning_df['best_cv_score'] = random_search.best_score_
     tuning_df['best_threshold'] = best_thr
-    tuning_df.to_csv(os.path.join(output_path, 'tuning_results.csv'), index=False)
+    tuning_df.to_csv(os.path.join(output_path, 'tables/tuning_results.csv'), index=False)
 
     print('Evaluating on test set')
     best_model.fit(X_train, y_train)
@@ -143,12 +147,12 @@ def main(train, test, output_path):
 
     report_dict = classification_report(y_test_binary, pred_result, target_names=['<=50k', '>50K'], output_dict=True)
     report_df = pd.DataFrame(report_dict).T
-    report_df.to_csv(os.path.join(output_path, 'classification_report.csv'), index_label='metric_category')
+    report_df.to_csv(os.path.join(output_path, 'tables/classification_report.csv'), index_label='metric_category')
 
     fig, ax = plt.subplots(figsize=(8, 6))
     ConfusionMatrixDisplay.from_predictions(y_test_binary, pred_result, display_labels=['<=50k', '>50K'], ax=ax)
     plt.title("Confusion matrix on test set")
-    plt.savefig(os.path.join(output_path, 'confusion_matrix.png'))
+    plt.savefig(os.path.join(output_path, 'figures/confusion_matrix.png'))
     plt.close()
 
     plt.figure(figsize=(6, 6))
@@ -158,7 +162,7 @@ def main(train, test, output_path):
     plt.xlabel('Recall')
     plt.ylabel('Precision')
     plt.legend()
-    plt.savefig(os.path.join(output_path, 'precision_recall_curve.png'))
+    plt.savefig(os.path.join(output_path, 'figures/precision_recall_curve.png'))
     plt.close() 
 
 if __name__ == "__main__":
