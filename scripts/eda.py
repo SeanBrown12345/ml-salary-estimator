@@ -180,5 +180,79 @@ def main(input_path, output_path):
     bubble_chart.save(os.path.join(output_path, "correlation_bubble.png"))
 
 
+    
+    # 3. Interactive Categorical Feature Distribution
+
+    
+    categorical_cols = (
+    df.select_dtypes(exclude=["number"])
+      .columns
+      .drop(["income", "native_country"])
+      .tolist())
+    
+    radio = alt.selection_point(
+        fields=["feature"],
+        bind=alt.binding_radio(options=categorical_cols, name="Select a Categorical Feature: "),
+        value=categorical_cols[0]
+    )
+    
+    df_long = df[categorical_cols + ["income"]].melt(
+        id_vars="income",
+        var_name="feature",
+        value_name="value"
+    )
+    
+    categories_chart = (
+        alt.Chart(df_long)
+        .transform_filter(radio)
+        .mark_bar()
+        .encode(
+            x=alt.X(
+                "value:N",
+                sort="-y",
+                title="Category Level",
+                axis=alt.Axis(labelAngle=-45, labelFontSize=14, titleFontSize=18)
+            ),
+            y=alt.Y(
+                "count():Q",
+                stack="normalize",
+                title="Proportion",
+                axis=alt.Axis(labelFontSize=14, titleFontSize=18)
+            ),
+            color=alt.Color(
+                "income:N",
+                title="Income",
+                legend=alt.Legend(
+                    titleFontSize=18,
+                    labelFontSize=16,
+                    symbolSize=200
+                )
+            ),
+            tooltip=["feature", "value", "income", "count()"]
+        )
+        .properties(
+            width=650,
+            height=400,
+            title=alt.TitleParams(
+                "Proportional Distribution of Categorical Features by Income",
+                fontSize=26,
+                anchor="middle"
+            )
+        )
+    )
+    
+    radio_bar = (
+        alt.Chart(pd.DataFrame({"feature": categorical_cols}))
+        .mark_point(opacity=0)
+        .add_params(radio)
+    )
+    
+    interactive_cat_plot = radio_bar & categories_chart
+    
+    # Save HTML interactive figure
+    out_html = os.path.join(output_path, "categorical_distribution_interactive.html")
+    interactive_cat_plot.save(out_html)
+
+
 if __name__ == '__main__':
     main()
