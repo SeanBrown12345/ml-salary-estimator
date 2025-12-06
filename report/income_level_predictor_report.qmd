@@ -47,17 +47,14 @@ To examine whether each predictor may help discriminate between the two income g
 
 ### Numeric Features
 
-Figure (@fig-numeric-histograms) illustrates that several numeric features show clear distributional differences between the two income groups.
 ![Distribution of Numeric Features by Income Group](../results/figures/numeric_feature_histograms.png){#fig-numeric-histograms}
 
-Overall, we observe noticeable shifts in the distributions of age, education, and working hours, with the >50K group generally concentrated in higher-value ranges. In contrast, capital-gain and capital-loss are highly skewed and mostly zero, but the >50K group displays relatively more non-zero values.
-
-These differences suggest that some numeric features may carry meaningful signals for predicting income, while others may require transformations or special handling due to extreme skewness.
+Figure @fig-numeric-histograms illustrates that several numeric features show clear distributional differences between the two income groups. Overall, we observe noticeable shifts in the distributions of age, education, and working hours, with the >50K group generally concentrated in higher-value ranges. In contrast, capital-gain and capital-loss are highly skewed and mostly zero, but the >50K group displays relatively more non-zero values. These differences suggest that some numeric features may carry meaningful signals for predicting income, while others may require transformations or special handling due to extreme skewness.
 
 
+![Spearman Correlation Bubble Chart](../results/figures/correlation_bubble.png){#fig-correlation_plot}
 
-
-In the Spearman Correlation Bubble Chart for numeric features, we can see that none of the numeric variables are strongly correlated with each other. The highest correlation is between education level and hours per week, at approximately 0.14, which is still very weak. Therefore, multicollinearity is not a concern for these features.
+Figure @fig-correlation_plot shows the pairwise Spearman correlations among the numeric predictors and their relationship to the income response variable. The explanatory variables do not exhibit strong monotonic relationships with one another, indicating low dependency and minimal multicollinearity. However, several of these predictors show meaningful associations with the income response variable, suggesting that they may provide useful signal for distinguishing between the two income groups.
 
 ### Categorical Features
 For categorical features, we produced normalized stacked bar charts to visualize how proportions of each income group differ across categories.
