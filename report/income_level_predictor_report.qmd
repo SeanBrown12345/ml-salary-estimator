@@ -41,36 +41,31 @@ In this project, we seek to build a machine learning model capable of accurately
 ## Data
 The data set used in this project is the Adult census income dataset. It was originally extracted from the 1994 U.S. Census database by Barry Becker.  In 1996, the dataset was donated to the UCI Machine Learning Repository with the collaboration of Ronny Kohavi [@becker_adult], the dataset can be found here: https://archive.ics.uci.edu/dataset/2/adult. The dataset contains 48,842 rows and 14 columns. We split the data into a 40% training set and a 60% test set. Each row in the data set represents an individual’s personal and demographic information, including the income class label (whether their annual income exceeded $50K or not) and attributes such as age, education level, occupation, and hours per week.
 
-To examine whether each predictor may help discriminate between the two income groups (<=50K vs. >50K), we first explored the numeric and categorical features separately.
+To examine whether each predictor may help discriminate between the two income groups (<=50K vs. >50K), we first explored the numeric and categorical features separately, using visualization methods implemented with Altair [@altair]
 
 
 
 ### Numeric Features
 
-![Distribution of Numeric Features by Income Group](../results/figures/numeric_feature_histograms.png){#fig-numeric-histograms}
+![Distribution of Numeric Features by Income Group](../results/figures/numeric_feature_histograms.png){#fig-numeric-histograms width=110%}
 
-Figure @fig-numeric-histograms illustrates that several numeric features show clear distributional differences between the two income groups. Overall, we observe noticeable shifts in the distributions of age, education, and working hours, with the >50K group generally concentrated in higher-value ranges. In contrast, capital-gain and capital-loss are highly skewed and mostly zero, but the >50K group displays relatively more non-zero values. These differences suggest that some numeric features may carry meaningful signals for predicting income, while others may require transformations or special handling due to extreme skewness.
+@fig-numeric-histograms illustrates that several numeric features show clear distributional differences between the two income groups. Overall, we observe noticeable shifts in the distributions of age, education, and working hours, with the >50K group generally concentrated in higher-value ranges. In contrast, capital-gain and capital-loss are highly skewed and mostly zero, but the >50K group displays relatively more non-zero values. These differences suggest that some numeric features may carry meaningful signals for predicting income, while others may require transformations or special handling due to extreme skewness.
+
 
 
 ![Spearman Correlation Bubble Chart](../results/figures/correlation_bubble.png){#fig-correlation_plot}
 
-Figure @fig-correlation_plot shows the pairwise Spearman correlations among the numeric predictors and their relationship to the income response variable. The explanatory variables do not exhibit strong monotonic relationships with one another, indicating low dependency and minimal multicollinearity. However, several of these predictors show meaningful associations with the income response variable, suggesting that they may provide useful signal for distinguishing between the two income groups.
+@fig-correlation_plot shows the pairwise Spearman correlations among the numeric predictors and their relationship to the income response variable. The explanatory variables do not exhibit strong monotonic relationships with one another, indicating low dependency and minimal multicollinearity. However, several of these predictors show meaningful associations with the income response variable, suggesting that they may provide useful signal for distinguishing between the two income groups.
+
+
 
 ### Categorical Features
-For categorical features, we produced normalized stacked bar charts to visualize how proportions of each income group differ across categories.
 
-This interactive chart shows the distribution of income levels across different categorical features. By selecting a feature from the radio buttons, the chart displays the proportion of individuals earning <=50K and >50K within each category of that feature. This can be used to compare how income outcomes vary across target groups.
 
-For example, when selecting workclass, we can see that individuals in “Self-emp-inc” have a noticeably higher proportion of >50K earners compared with categories like “Private” or “Without-pay.” This helps identify which categories are more associated with higher or lower income.
+![Distribution of Categorical Features by Income Group](../results/figures/categorical_feature_bars.png){#fig-categorical_distribution width=110%}
 
-### Insights for Histogram of Categorical Features
 
-- Workclass: Some categories like Self-emp-inc and Federal-gov show a noticeably larger share of individuals earning >50K. In contrast, groups like Private and Never-worked are totally composed of <=50K earners.
-
-- Education: Higher degrees (e.g., Masters, Doctorate) are strongly associated with higher income, with a much greater proportion of >50K individuals. Meanwhile, categories such as HS-grad and Some-college are still dominated by the <=50K group.
-
-- Other categorical features: Variables including marital-status, occupation, and relationship also show clear differences in the distribution of income levels across categories. This uneven spread suggests that many of these categorical predictors carry useful information for distinguishing between the two income groups.
-
+@fig-categorical_distribution summarizes how the two income groups are distributed across several categorical predictors. Across most features, the proportions of individuals earning >50K and <=50K vary noticeably from one category to another. Some categories show a higher share of >50K earners, while others are almost entirely composed of the <=50K group. These uneven distributions indicate that the categorical predictors are informative for distinguishing income levels. Rather than exhibiting uniform patterns, many features display clear shifts in income composition across their categories, suggesting that they capture meaningful differences relevant for predicting income outcomes.
 
 ## Analysis
 To build a classification model, all columns in the dataset were used except final weight (irrelevant data), education-num (redundant information with the education column), and race (for ethical considerations). All columns are imputed and then transformed according to their data types. We compare the performance of SVM RBF, logistic regression, and random forest, using their default parameters. We then select the top performing model for hyperparameter and decision threshold tuning with cross validation. We evaluate the models using F1 score due to the class imbalance.
