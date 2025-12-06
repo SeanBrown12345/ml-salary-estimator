@@ -43,30 +43,19 @@ The data set used in this project is the Adult census income dataset. It was ori
 
 To examine whether each predictor may help discriminate between the two income groups (<=50K vs. >50K), we first explored the numeric and categorical features separately.
 
-### Summary of the Training Data
-
-By checking the summary table below, we observe that there are several missing values in features such as workclass, occupation, and native-country. These missing values will be handled during data preprocessing using an appropriate imputation strategy.
-
-Additionally, the target variable income contains inconsistencies in spelling (e.g., '<50K' vs. '<50K.'), so we cleaned these values to ensure a consistent label representation.
 
 
 ### Numeric Features
 
-According to the summary table, the numeric features vary widely in both range and scale. For example, hours-per-week ranges from 1 to 99, whereas capital-gain ranges from 0 to 99,999. This large difference in magnitude makes it necessary to apply a StandardScaler to normalize the features so that models relying on distance can compare them fairly.
+Figure (@fig-numeric-histograms) illustrates that several numeric features show clear distributional differences between the two income groups.
+![Distribution of Numeric Features by Income Group](../results/figures/numeric_feature_histograms.png){#fig-numeric-histograms}
 
-Additionally, some variables such as capital-gain and capital-loss are extremely skewed, with most values concentrated near zero. We are going to the compare the distribution of the numeric features differ between the two target classes income <=50K and >50K.
+Overall, we observe noticeable shifts in the distributions of age, education, and working hours, with the >50K group generally concentrated in higher-value ranges. In contrast, capital-gain and capital-loss are highly skewed and mostly zero, but the >50K group displays relatively more non-zero values.
 
-### Insights for Histogram of Numeric Features:
+These differences suggest that some numeric features may carry meaningful signals for predicting income, while others may require transformations or special handling due to extreme skewness.
 
-- Age: The two income groups differ clearly in their age distributions. Individuals earning >50K tend to be older, most commonly between ages 40 and 55, while the <=50K group is more spread out and skewed younger. This suggests that higher income may be linked to greater work experience.
-  
-- Education-num: Individuals earning >50K generally have higher education levels, indicating that formal education is an important factor associated with income.
 
-- Capital-gain: The distribution is strongly right-skewed, with most values at zero for both groups. Non-zero values appear more often in the >50K group, and there is an extreme outlier near 100,000.
 
-- Capital-loss: The pattern is similar to capital-gain, with almost all values at zero and slightly more non-zero observations in the >50K group.
-
-- Hours-per-week: Individuals earning >50K tend to work longer hours, showing a clear shift toward extended working time.
 
 In the Spearman Correlation Bubble Chart for numeric features, we can see that none of the numeric variables are strongly correlated with each other. The highest correlation is between education level and hours per week, at approximately 0.14, which is still very weak. Therefore, multicollinearity is not a concern for these features.
 
