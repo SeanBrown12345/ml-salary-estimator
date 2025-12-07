@@ -49,11 +49,19 @@ quarto render reports/income_level_predictor_report.qmd --to pdf
 
 ## Usage
 Follow the steps below to reproduce the analysis.
-All commands should be run inside the Docker container started with `docker compose up`.
 
 ### 1. Setup
-
-Make sure Docker Desktop is running, then clone this repo.
+1. Make sure Docker Desktop is running
+2. Clone this repository and move into the project folder:
+   ```bash
+   git clone https://github.com/SeanBrown12345/ml-salary-estimator.git
+   cd ml-salary-estimator
+   ```
+3. Start the Docker container (pulling the latest image):
+   ```bash
+   docker compose up --pull always
+   ```
+Once the container is running, open a new terminal inside the container to run the following steps.
 
 ### 2. Download raw data
 ```bash
@@ -90,7 +98,7 @@ python scripts/model_training.py \
 
 ### 6. Render the final report as PDF
 ```bash
-quarto render reports/income_level_predictor_report.qmd --to pdf
+quarto render report/income_level_predictor_report.qmd --to pdf
 ```
 
 ## Dependencies
