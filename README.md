@@ -10,87 +10,108 @@ Report URL: https://seanbrown12345.github.io/ml-salary-estimator/
 
 
 ## About
-This project aims to build a predictive machine learning model that determines whether an individual’s annual income exceeds \$50K based on demographic and employment-related features. Using the Adult Census Income Dataset from the UCI Machine Learning Repository, we explore socioeconomic patterns and evaluate classification models to understand which features are most strongly associated with higher income levels.
-
-This repository is created as part of the DSCI 522 group project (Milestone 1), focusing on developing a reproducible, well-structured, and collaborative data analysis workflow.
-
+This project predicts whether an individual's annual income exceeds $50K using the Adult Census Income dataset from the UCI Machine Learning Repository. The analysis is implemented as a fully reproducible machine learning pipeline, including data downloading, cleaning, exploratory analysis, model training, and report generation. The workflow is structured using modular Python scripts, Quarto for reporting, and a containerized environment to ensure consistent and reproducible results. The goal is to identify key demographic and socioeconomic factors associated with higher income while demonstrating best practices in reproducible data science.
 
 ## Data
-
-This project uses the Adult Census Income dataset from the 
+This project uses the Adult Census Income dataset from the
 UCI Machine Learning Repository (https://archive.ics.uci.edu/dataset/2/adult).
 
-The following raw files are included for full reproducibility:
-- `adult.data` – training data  
-- `adult.test` – test data  
-- `adult.names` – feature documentation  
-- `old.adult.names` – legacy attribute file  
-- `Index` – dataset index file  
+The dataset contains demographic and employment-related variables collected from the 1994 U.S. Census, and the prediction target is whether an individual’s income exceeds $50K/year.
 
-Each row represents information recorded from a 1994 U.S. census population survey.  
-The target variable is **income**, categorized as `<=50K` or `>50K`.
+All raw data are automatically downloaded and processed through the project’s scripts (see Usage section), ensuring full reproducibility without requiring users to manually handle any data files.
 
+## Script Overview
+This project uses four modular Python scripts that together form a fully reproducible machine learning pipeline:
+
+1. scripts/data_download.py – Download raw data
+
+Downloads the Adult Census dataset from a given URL and saves it into the data/raw directory.
+
+2. scripts/clean_split_data.py – Clean and prepare data
+
+Reads the raw dataset, performs cleaning, preprocesses columns, and splits the data into training and test sets.
+
+3. scripts/eda.py – Exploratory data analysis
+
+Creates exploratory data visualizations and saves the output figures to results/figures.
+
+4. scripts/model_training.py – Model fitting and evaluation
+
+Trains predictive models on the processed data, evaluates model performance, and outputs results (tables & figures) to the results/ directory.
+
+## Report Document (Quarto)
+Our main report is written in Quarto (reports/income_level_predictor_report.qmd).
+This document narrates the analysis, incorporates figures and tables generated from the scripts, and hides all code in the final rendered PDF.
+The report is rendered using:
+```bash
+quarto render reports/income_level_predictor_report.qmd --to pdf
+```
 
 ## Usage
-
 Follow the steps below to reproduce the analysis.
 
-### Setup
+### 1. Setup
+1. Make sure Docker Desktop is running
+2. Clone this repository and move into the project folder:
+   ```bash
+   git clone https://github.com/SeanBrown12345/ml-salary-estimator.git
+   cd ml-salary-estimator
+   ```
+3. Start the Docker container (pulling the latest image):
+   ```bash
+   docker compose up --pull always
+   ```
+Once the container is running, open a new terminal inside the container to run the following steps.
 
-1. Make sure Docker Desktop is running, then clone this repo.
-
-### Usage
-
-2. Navigate to the root of this project, make sure there isn't another process occupying port 8888, then run this command:
+### 2. Download raw data
 ```bash
-docker compose up --pull always
+python scripts/data_download.py \
+  --url "https://archive.ics.uci.edu/static/public/2/adult.zip" \
+  --destination_path data/raw
 ```
 
+### 3. Clean and split data
+```bash
+python scripts/clean_split_data.py \
+  --input-path data/raw/adult.data \
+  --output-train-path data/processed/train.data \
+  --output-test-path data/processed/test.data \
+  --test-size 0.6 \
+  --random-state 123 \
+  --target-col income
+```
 
-3. In the terminal, look for the URL that looks something like `http://127.0.0.1:8888/lab?token=` , copy and paste that URL into your browser.
+### 4. Run EDA (outputs figures to results/figures)
+```bash
+python scripts/eda.py \
+  --input_path data/processed/train.data \
+  --output_path results/figures
+```
 
+### 5. Train models and generate results (tables & figures)
+```bash
+python scripts/model_training.py \
+  --train data/processed/train.data \
+  --test data/processed/test.data \
+  -o results/
+```
 
-
-4. In the jupyter lab session that just launched, open `src/income_level_predictor_report.ipynb`. In the top menu under "Kernel", click "Restart Kernel and Run All Cells..."
-
-
-### Clean up
-
-1. Go back to the terminal where docker compose is running,  then
-type `Cntrl` + `C` in the terminal where you launched the container, and then type `docker compose rm` to remove the stopped container.
+### 6. Render the final report as PDF
+```bash
+quarto render report/income_level_predictor_report.qmd --to pdf
+```
 
 ## Dependencies
+All dependencies required to run this project are specified in `environment.yml` and locked in `conda-lock.yml`.  
+The analysis runs inside a Docker container, so users don’t need to install packages manually.
 
-All dependencies required to run this project are listed in the `environment.yml` file, which ensures a fully reproducible computational environment. Key packages include:
-
-- Python 3.12  
-- pandas  
-- scikit-learn  
-- ucimlrepo  
-- matplotlib  
-- altair & vegafusion  
-- pyarrow  
-- jupyter  
-- conda-lock  
-
-These dependencies will be installed automatically when running:
-
+## Updating the Computational Environment
+If new dependencies are added (e.g., new Python packages or Quarto), update the environment by:
+1. Adding the dependency to `environment.yml`
+2. Regenerating the lockfile:
 ```bash
-conda env create --file environment.yml
+conda-lock --file environment.yml --lockfile conda-lock.yml
 ```
-## Adding Dependencies
-
-1. In a new branch, add the dependency to the environment.yml file.
-
-2. Run the command `conda-lock --file environment.yml` --update to update the `conda-lock.yml` file.
-
-3. Re-build the Docker image.
-
-4. Push the changes to github, the Docker image will be updated automatically. This image will be tagged with the SHA for the commit which changed the file.
-
-5. Update `docker.compose.yml` on your branch to use the newly created container image.
-
-6. Create a PR to merge your branch with main.
 
 ## License
 
@@ -100,7 +121,6 @@ The written documentation and report in this repository are licensed under the
 The source code in this repository is released under the **MIT License**.
 
 For full details, see the `LICENSE` file included in this repository.
-
 
 ## References
 
