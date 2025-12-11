@@ -47,6 +47,11 @@ The report is rendered using:
 quarto render reports/income_level_predictor_report.qmd --to pdf
 ```
 
+## Dependencies
+- [Docker](https://www.docker.com/) 
+- [VS Code](https://code.visualstudio.com/download)
+- [VS Code Jupyter Extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
+
 ## Usage
 Follow the steps below to reproduce the analysis.
 
@@ -100,6 +105,10 @@ python scripts/model_training.py \
 ```bash
 quarto render report/income_level_predictor_report.qmd --to pdf
 ```
+## Developer Dependencies
+ - `conda` version 25.7.0 or higher
+  - `conda-lock` version 3.0.4 or higher
+
 
 ## Dependencies
 All dependencies required to run this project are specified in `environment.yml` and locked in `conda-lock.yml`.  
