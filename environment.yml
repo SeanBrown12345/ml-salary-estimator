@@ -16,4 +16,4 @@ dependencies:
   - pyarrow=22.0.0
   - conda-lock=3.0.4
   - pointblank=0.16.0
-prefix: C:\Users\upwaz\miniforge3\envs\522groupenv.yaml
+  - pytest=9.0.2
