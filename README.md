@@ -62,10 +62,16 @@ Follow the steps below to reproduce the analysis.
    git clone https://github.com/SeanBrown12345/ml-salary-estimator.git
    cd ml-salary-estimator
    ```
-3. Start the Docker container (pulling the latest image):
+3. Start the Docker container by running this command in the terminal:
    ```bash
    docker compose up --pull always
    ```
+
+In the terminal, look for a URL that starts with http://127.0.0.1:8888/lab?token= (See Below). Copy and paste that URL into your browser to open JupyterLab inside the Docker container.
+
+<img src="img/docker_url.png" width=400>
+
+
 Once the container is running, open a new terminal inside the container to run the following steps.
 
 ### 2. Download raw data
