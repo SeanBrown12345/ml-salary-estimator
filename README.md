@@ -64,7 +64,7 @@ Follow the steps below to reproduce the analysis.
    ```
 3. Start the Docker container by running this command in the terminal:
    ```bash
-   docker compose up --pull always
+   docker compose up
    ```
 
 In the terminal, look for a URL that starts with http://127.0.0.1:8888/lab?token= (See Below). Copy and paste that URL into your browser to open JupyterLab inside the Docker container.
