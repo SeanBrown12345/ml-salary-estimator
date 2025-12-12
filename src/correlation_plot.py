@@ -103,8 +103,7 @@ def corr_plot(dataframe, feature_list):
         )
         .configure_legend(
             titleFontSize=18,
-            labelFontSize=16
-        ))
+            labelFontSize=16))
     
     return bubble_chart
 
