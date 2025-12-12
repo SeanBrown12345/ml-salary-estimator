@@ -71,16 +71,20 @@ To examine whether each predictor may help discriminate between the two income g
 To build a classification model, all columns in the dataset were used except final weight (irrelevant data), education-num (redundant information with the education column), and race (for ethical considerations). All columns are imputed and then transformed according to their data types. We compare the performance of SVM RBF, logistic regression, and random forest, using their default parameters. We then select the top performing model for hyperparameter and decision threshold tuning with cross validation. We evaluate the models using F1 score due to the class imbalance.
 
 
-![Confusion matrix of model performance on test data.](../results/figures/confusion_matrix.png){#fig-conf-mat width=100%}
+![Confusion matrix of model performance on test data.](../results/figures/confusion_matrix.png){#fig-conf-mat fig-pos="H" width=80%}
 
-![Precision Recall Curve](../results/figures/precision_recall_curve.png){#fig-pre width=100%}
+![Precision Recall Curve](../results/figures/precision_recall_curve.png){#fig-pre fig-pos="H" width=80%}
+
+
 
 # Results & Discussion
 The initial experiment revealed that the logistic regression model has the highest base F1 score of `{python} baseline_comparison.iloc[1, 1]`. After tuning the hyperparameter C and the decision threshold, we evaluated our final model on the test set. Our model achieved a final accuracy of `{python} classification_report.iloc[2, 1]` and a weighted average F1 score of  `{python} classification_report.iloc[4, 3]`.
 
 As seen in @fig-pre, models perform well on the majority class (income <= 50K), with a precision and recall of `{python} classification_report.iloc[0, 1]` and `{python} classification_report.iloc[0, 2]` respectively. On the minority class (income > 50K), our model has a recall of `{python} classification_report.iloc[1, 2]`, meaning it catches 74% of the minority class. We only have a `{python} classification_report.iloc[1, 1]` precision on the minority class, which implies that there are many false positives. In conclusion, our model is tuned to be sensitive to catch many cases where one’s income is above 50K, but also creates many false alarms.
 
-# Future Works
+# Limitations and Future Works
+
+One possible limitations of our analysis is class imbalance. With far fewer high-income cases, our model can be biased towards the majority class. Another limitation is the generalizabilty of our results. Since our model was trained on data extracted from a 1994 census, it may not accurately reflect patterns in today's population. Additionally, a key limitation is model complexity, our chosen model may not have been capable of capturing all the relationships within the data.
 
 To improve the model, we propose some solutions to be done in further works. First, our decision threshold is tuned to maximize F1 score. Instead of this, we could select a threshold manually, depending on if we want to focus more on recall or precision. Instead of using class_weight=’balanced’ to give the minority class a heavier weight, another common and often better approach is to oversample the minority class, creating synthetic data until the classes are balanced. Finally, with the suboptimal results of both the recall and precision of the minority class, we suspect our models are not complex enough to accurately model the data. Other models such as XGBoost or neural networks could be tested to see if there is an improvement.
 
