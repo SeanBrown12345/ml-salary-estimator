@@ -30,6 +30,8 @@ def corr_plot(dataframe, feature_list):
     TypeError
         If `feature_list` is not a list.
     ValueError
+        If the dataframe is empty and contains no observations.
+    ValueError
         If any feature in `feature_list` does not exist in `dataframe`.
 
     """
@@ -45,6 +47,14 @@ def corr_plot(dataframe, feature_list):
     missing = set(feature_list) - set(dataframe.columns)
     if missing:
         raise ValueError(f"Features not found in dataframe: {missing}")
+        
+    #check dataframe is empty or not
+    if dataframe.empty:
+        raise ValueError("Dataframe must contain observations.")
+
+    #check feature_list is empty or not
+    if not feature_list:
+        raise ValueError("feature_list cannot be empty.")
         
     # Compute correlation matrix and save as a dataframe
     corr_df = (
