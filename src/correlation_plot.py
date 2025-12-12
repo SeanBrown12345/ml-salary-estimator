@@ -3,6 +3,36 @@ import numpy as np
 import pandas as pd
 
 def corr_plot(dataframe, feature_list):
+    """
+    Create a correlation bubble chart for selected features.
+
+    This function computes the pairwise Pearson correlation coefficients
+    among the specified numeric features and visualizes them using an
+    Altair bubble chart. 
+
+    Parameters
+    ----------
+    dataframe : pandas.DataFrame
+        Input dataframe containing the features to be analyzed.
+    feature_list : list of str
+        List of column names in `dataframe` for which correlations
+        will be computed.
+
+    Returns
+    -------
+    altair.Chart
+        An Altair bubble chart visualizing the correlation matrix.
+
+    Raises
+    ------
+    TypeError
+        If `dataframe` is not a pandas DataFrame.
+    TypeError
+        If `feature_list` is not a list.
+    ValueError
+        If any feature in `feature_list` does not exist in `dataframe`.
+
+    """
     # check dataframe type
     if not isinstance(dataframe, pd.DataFrame):
         raise TypeError("dataframe must be a pandas DataFrame")
