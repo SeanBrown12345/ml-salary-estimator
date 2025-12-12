@@ -69,7 +69,7 @@ Follow the steps below to reproduce the analysis.
 
 In the terminal, look for a URL that starts with http://127.0.0.1:8888/lab?token= (See Below). Copy and paste that URL into your browser to open JupyterLab inside the Docker container.
 
-<img src="img/docker_url.png" width=400>
+<img src="img/docker_url.png" width=600>
 
 
 Once the container is running, open a new terminal inside the container to run the following steps.
@@ -114,11 +114,6 @@ quarto render report/income_level_predictor_report.qmd --to pdf
 ## Developer Dependencies
  - `conda` version 25.7.0 or higher
   - `conda-lock` version 3.0.4 or higher
-
-
-## Dependencies
-All dependencies required to run this project are specified in `environment.yml` and locked in `conda-lock.yml`.  
-The analysis runs inside a Docker container, so users don’t need to install packages manually.
 
 ## Updating the Computational Environment
 If new dependencies are added (e.g., new Python packages or Quarto), update the environment by:
