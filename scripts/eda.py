@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import altair as alt
 import numpy as np
 import math
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from src.correlation_plot import corr_plot
 
 
 @click.command()
@@ -106,79 +109,11 @@ def main(input_path, output_path):
 
     # Copy df and convert income → binary
     df_corr = df.copy()
-    df_corr["income_binary"] = (df_corr["income"] == ">50K").astype(int)
+    df_corr["income"] = (df_corr["income"] == ">50K").astype(int)
 
     # Select all numeric columns including income_binary
     numeric_cols = df_corr.select_dtypes(include="number").columns.tolist()
-
-    # Compute correlation matrix
-    corr_df = (
-        df_corr[numeric_cols]
-        .corr(method='spearman')
-        .stack()
-        .reset_index()
-    )
-    corr_df.columns = ['Feature 1', 'Feature 2', 'Correlation']
-    corr_df['Absolute Correlation'] = corr_df['Correlation'].abs()
-
-    # ----- Save correlation bubble chart -----
-    bubble_chart = (
-    alt.Chart(corr_df)
-    .mark_circle()
-    .encode(
-        x=alt.X(
-            'Feature 1:N',
-            title='Feature 1',
-            axis=alt.Axis(labelAngle=-45, labelFontSize=16, titleFontSize=20)
-        ),
-        y=alt.Y(
-            'Feature 2:N',
-            title='Feature 2',
-            axis=alt.Axis(labelFontSize=16, titleFontSize=20)
-        ),
-        size=alt.Size(
-            'Absolute Correlation:Q',
-            scale=alt.Scale(domain=(0, 1)),
-            legend=alt.Legend(
-                title="Absolute Correlation",
-                titleFontSize=18,
-                labelFontSize=16
-            )
-        ),
-        color=alt.Color(
-            'Correlation:Q',
-            scale=alt.Scale(scheme='blueorange', domain=(-1, 1)),
-            legend=alt.Legend(
-                title="Correlation",
-                titleFontSize=18,
-                labelFontSize=16
-            )
-        ),
-        tooltip=[
-            'Feature 1',
-            'Feature 2',
-            alt.Tooltip('Correlation:Q', format='.3f'),
-            alt.Tooltip('Absolute Correlation:Q', format='.3f')
-        ]
-    )
-    .properties(
-        width=580,    
-        height=580,
-        title=alt.TitleParams(
-            "Spearman Correlation Bubble Chart",
-            fontSize=30,
-            fontWeight="normal",
-            anchor="middle"
-        )
-    )
-    .configure_view(
-        strokeWidth=0 
-    )
-    .configure_legend(
-        titleFontSize=18,
-        labelFontSize=16
-    ))
-
+    bubble_chart = corr_plot(df_corr,numeric_cols)
     bubble_chart.save(os.path.join(output_path, "correlation_bubble.png"))
 
 
