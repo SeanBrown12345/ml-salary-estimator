@@ -67,9 +67,6 @@ def read_zip(url, destination_path):
 @click.option('--destination_path', type=str, help="Path to directory where raw data will be written to")
 
 def main(url, destination_path):
-    if not os.path.isdir(destination_path):
-        raise ValueError('The destination path is invalid.')
-
     try:
         read_zip(url, destination_path)
     except:
