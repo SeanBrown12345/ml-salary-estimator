@@ -13,6 +13,10 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from scipy.stats import loguniform
 import matplotlib.pyplot as plt
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from src.load_data import load_data
+from src.baseline_test import baseline_test
 
 @click.command()
 @click.option('-tr', '--train', type=str, required=True, help="path to the data file holding the training data")
@@ -26,14 +30,7 @@ def main(train, test, output_path):
     if not os.path.exists(os.path.join(output_path, 'figures')):
         os.makedirs(os.path.join(output_path, 'figures'))
 
-    try:
-        train_df = pd.read_csv(train)
-        print('Successfully loaded training data')
-        test_df = pd.read_csv(test)
-        print('Successfully loaded test data')
-    except Exception as e:
-        print(f'Error when reading files: {e}')
-        return(1)
+    train_df, test_df = load_data(train, test)
     
     X_train = train_df.drop(columns="income")
     y_train = train_df["income"]
@@ -76,31 +73,25 @@ def main(train, test, output_path):
     )
 
     print('Starting baseline test')
-
-    f1_scorer = make_scorer(f1_score, pos_label='>50K')
-    
-    cv_results = {}
-    
     dummy = DummyClassifier(strategy='constant', constant='>50K')
     dummy_pipe = make_pipeline(preprocessor, dummy)
-    cv_results['Dummy'] = cross_val_score(dummy_pipe, X_train, y_train, cv=5, scoring=f1_scorer).mean()
 
-    # logistic regression
     logReg = LogisticRegression(class_weight='balanced', max_iter=1000, random_state=456)
     logReg_pipe = make_pipeline(preprocessor, logReg)
-    cv_results['LogisticRegression'] = cross_val_score(logReg_pipe, X_train, y_train, cv=5, scoring=f1_scorer).mean()
 
-    # RBF SVM
     svm = SVC(kernel='rbf', class_weight='balanced', random_state=456)
     svm_pipe = make_pipeline(preprocessor, svm)
-    cv_results['SVC'] = cross_val_score(svm_pipe, X_train, y_train, cv=5, scoring=f1_scorer).mean()
 
-    # random forest
     rf = RandomForestClassifier(class_weight='balanced', random_state=456)
     rf_pipe = make_pipeline(preprocessor, rf)
-    cv_results['RandomForest'] = cross_val_score(rf_pipe, X_train, y_train, cv=5, scoring=f1_scorer).mean()
 
-    results_df = pd.DataFrame(list(cv_results.items()), columns=['Model', 'Mean f1 score'])
+    pipelines = {
+        'Dummy': dummy_pipe,
+        'LogisticRegression': logReg_pipe,
+        'SVC' : svm_pipe,
+        'RandomForest' : rf_pipe
+    }
+    results_df = baseline_test(pipelines, X_train, y_train)
     results_df.to_csv(os.path.join(output_path, 'tables/baseline_comparison.csv'), index=False)
     
     print('Starting hyperparameter tuning')
