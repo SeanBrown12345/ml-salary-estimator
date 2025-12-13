@@ -95,7 +95,7 @@ for p in figs: \
 
 # Try model training, but don't block the pipeline if it fails.
 $(MODEL_STAMP): scripts/model_training.py $(TRAIN_DATA) $(TEST_DATA) $(FIXED_STAMP) | $(TABLE_DIR)
-	-$(PYTHON) scripts/model_training.py \
+    -$(PYTHON) scripts/model_training.py \
 		--train $(TRAIN_DATA) \
 		--test $(TEST_DATA) \
 		--output_path results
