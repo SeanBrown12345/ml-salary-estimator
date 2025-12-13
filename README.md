@@ -51,6 +51,37 @@ quarto render reports/income_level_predictor_report.qmd --to pdf
 - [Docker](https://www.docker.com/) 
 - [VS Code](https://code.visualstudio.com/download)
 - [VS Code Jupyter Extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
+  
+## Reproducible Pipeline (Makefile)
+
+This project uses a `Makefile` as a single driver script to run the entire analysis pipeline from start to finish in a fully reproducible way.
+
+The Makefile specifies all required arguments and ensures that each step of the workflow is executed in the correct order.
+
+### Makefile targets
+
+- `make all`  
+Runs the complete analysis pipeline, including:
+1. Downloading the raw data
+2. Cleaning and splitting the data
+3. Performing exploratory data analysis
+4. Training and evaluating models
+5. Rendering the final Quarto report
+
+- `make clean`  
+Removes all generated files (processed data, results, and rendered reports), allowing the entire analysis to be rerun from a clean state.
+
+### Recommended usage
+
+From the project root directory **inside the Docker container**, run:
+```bash
+make all
+```
+To remove all generated outputs:
+```bash
+make clean
+```
+Note: The steps in the Usage section below describe the underlying commands for transparency, but running make all is the recommended way to reproduce the full analysis.
 
 ## Usage
 Follow the steps below to reproduce the analysis.
@@ -113,7 +144,7 @@ quarto render report/income_level_predictor_report.qmd --to pdf
 ```
 ## Developer Dependencies
  - `conda` version 25.7.0 or higher
-  - `conda-lock` version 3.0.4 or higher
+ - `conda-lock` version 3.0.4 or higher
 
 
 ## Dependencies
