@@ -31,6 +31,7 @@ def main(train, test, output_path):
         os.makedirs(os.path.join(output_path, 'figures'))
 
     train_df, test_df = load_data(train, test)
+    f1_scorer = make_scorer(f1_score, pos_label='>50K')
     
     X_train = train_df.drop(columns="income")
     y_train = train_df["income"]
