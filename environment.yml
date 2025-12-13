@@ -17,3 +17,4 @@ dependencies:
   - conda-lock=3.0.4
   - pointblank=0.16.0
   - pytest=9.0.2
+  - make   
